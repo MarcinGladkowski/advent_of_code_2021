@@ -28,11 +28,10 @@ def select_higher(zero, one):
 def select_lower(zero, one):
     return '0' if zero < one or zero == one else '1'
 
-def oxygen_generator_rating(binary_numbers, startIndex, strategy):
+def oxygen_generator_rating(binary_numbers, index, strategy):
 
-    if startIndex > 999:
-        raise Exception('Infinitive loop Marcin!')
-
+    if index > 999:
+        raise Exception('Infinitive recursion Marcin!')
 
     if len(binary_numbers) == 1:
         return int(binary_numbers[0], 2)
@@ -41,14 +40,12 @@ def oxygen_generator_rating(binary_numbers, startIndex, strategy):
     one = 0
     for binary in binary_numbers:
 
-        if binary[startIndex] == '0':
+        if binary[index] == '0':
             zero += 1
-        if binary[startIndex] == '1':
+        if binary[index] == '1':
             one += 1
 
-    binary_numbers = [number for number in binary_numbers if number[startIndex] == strategy(zero, one)]
-
-    return oxygen_generator_rating(binary_numbers, startIndex+1, strategy)
+    return oxygen_generator_rating([number for number in binary_numbers if number[index] == strategy(zero, one)], index + 1, strategy)
 
 
 with open('test_input.txt') as f:
@@ -60,3 +57,4 @@ with open('test_input.txt') as f:
 with open('input.txt') as f:
     data = f.read().split('\n')
     assert 1131506 == power_consumption(data)
+    assert 7863147 == oxygen_generator_rating(data, 0, select_lower) * oxygen_generator_rating(data, 0, select_higher)
