@@ -24,26 +24,29 @@ def power_consumption(binary_numbers):
 
 
 def oxygen_generator_rating(binary_numbers, startIndex):
-    if len(data) == 1:
-        return data
 
+    if startIndex > 999:
+        raise Exception('Infinitive loop Marcin!')
+
+
+    if len(binary_numbers) == 1:
+        return binary_numbers[0]
+
+    zero = 0
+    one = 0
     for binary in binary_numbers:
 
-        print(type(binary[startIndex]))
 
-        storage = {
-            '0': 0,
-            '1': 0
-        }
+        if binary[startIndex] == '0':
+            zero += 1
+        if binary[startIndex] == '1':
+            one += 1
 
-        if storage.get(binary[startIndex], 0):
-            storage[binary[startIndex]] += 1
+    to_select = '0' if zero > one else '1'
 
-        print(storage)
+    binary_numbers = [number for number in binary_numbers if number[startIndex] == to_select]
 
-        # most_common = None
-        # for counters in storage.values():
-        #     most_common = '0' if int(counters['0']) > int(counters['1']) else '1'
+    return oxygen_generator_rating(binary_numbers, startIndex+1)
 
 
 with open('test_input.txt') as f:
