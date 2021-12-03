@@ -30,12 +30,11 @@ def oxygen_generator_rating(binary_numbers, startIndex):
 
 
     if len(binary_numbers) == 1:
-        return binary_numbers[0]
+        return int(binary_numbers[0], 2)
 
     zero = 0
     one = 0
     for binary in binary_numbers:
-
 
         if binary[startIndex] == '0':
             zero += 1
@@ -52,7 +51,7 @@ def oxygen_generator_rating(binary_numbers, startIndex):
 with open('test_input.txt') as f:
     data = f.read().split('\n')
     assert 198 == power_consumption(data)
-    assert '10111' == oxygen_generator_rating(data, 0)
+    assert 23 == oxygen_generator_rating(data, 0)
 
 with open('input.txt') as f:
     data = f.read().split('\n')
