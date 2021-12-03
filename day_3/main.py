@@ -22,14 +22,13 @@ def power_consumption(binary_numbers):
 
     return int(''.join(most_commons), 2) * int(''.join(less_commons), 2)
 
-
-def zero_lead(zero, one):
+def select_higher(zero, one):
     return '0' if zero > one else '1'
 
-def one_lead(zero, one):
-    return '0' if zero < one else '1'
+def select_lower(zero, one):
+    return '0' if zero < one or zero == one else '1'
 
-def oxygen_generator_rating(binary_numbers, startIndex, number_strategy):
+def oxygen_generator_rating(binary_numbers, startIndex, strategy):
 
     if startIndex > 999:
         raise Exception('Infinitive loop Marcin!')
@@ -47,16 +46,16 @@ def oxygen_generator_rating(binary_numbers, startIndex, number_strategy):
         if binary[startIndex] == '1':
             one += 1
 
+    binary_numbers = [number for number in binary_numbers if number[startIndex] == strategy(zero, one)]
 
-    binary_numbers = [number for number in binary_numbers if number[startIndex] == number_strategy(zero, one)]
-
-    return oxygen_generator_rating(binary_numbers, startIndex+1, number_strategy)
+    return oxygen_generator_rating(binary_numbers, startIndex+1, strategy)
 
 
 with open('test_input.txt') as f:
     data = f.read().split('\n')
     assert 198 == power_consumption(data)
-    assert 23 == oxygen_generator_rating(data, 0, zero_lead)
+    assert 10 == oxygen_generator_rating(data, 0, select_lower)
+    assert 23 == oxygen_generator_rating(data, 0, select_higher)
 
 with open('input.txt') as f:
     data = f.read().split('\n')
