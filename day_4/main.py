@@ -29,7 +29,22 @@ def play(numbers_set, boards):
     return None
 
 
-with open('test_input.txt') as f:
+def first_win(lottery_numbers, boards):
+    initial = 5
+    bid = 0
+    while True:
+        bid += 1
+
+        if result := play(lottery_numbers[0:initial + bid], boards):
+            print('Winner!: ', result)
+            break
+
+        if initial_offset + bid >= len(lottery_numbers):
+            raise Exception('Finish lottery by force!')
+
+
+
+with open('input.txt') as f:
     data = f.read().split('\n')
 
     numbers = [int(n) for n in data[0].split(',')]
@@ -51,13 +66,5 @@ with open('test_input.txt') as f:
     # filter empty lines
     numbers_play_set = numbers[0:initial_offset]
 
-    bid = 0
-    while True:
-        bid += 1
+    first_win(numbers, parsed_rows)
 
-        if result:= play(numbers[0:initial_offset + bid], parsed_rows):
-            print('Winner!: ', result)
-            break
-
-        if initial_offset + bid >= len(numbers):
-            raise Exception('Finish lottery by force!')
