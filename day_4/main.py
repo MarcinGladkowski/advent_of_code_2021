@@ -1,6 +1,5 @@
 def calculate_unmarked(lottery_numbers, board):
     diff = []
-
     for row in board:
         row_diff = list(set(row) - set(lottery_numbers))
         for d in row_diff:
@@ -22,31 +21,12 @@ assert 188 == calculate_unmarked(win_number_set, unmarked_board)
 
 
 def play(numbers_set, boards):
-    diff = []
-    won = False
-    print("Start lotterry!")
     for board in boards:
-
-        print(board)
-
         for row in board:
-            # diff of numbers from row and lottery
-            row = [int(r) for r in row.split(' ') if r != '']  # parsing each row
-            print(row)
-
-            row_diff = list(set(row) - set(numbers_set))
-            for d in row_diff:
-                diff.append(d)
-
             if set(row).issubset(set(numbers_set)):
-                won = True
+                return calculate_unmarked(numbers_set, board) * numbers_set[-1]
 
-
-
-    print(sum(diff))
-    print(diff)
-
-    return won
+    return None
 
 
 with open('test_input.txt') as f:
@@ -57,7 +37,15 @@ with open('test_input.txt') as f:
     bingo_boards = data[1:]
 
     parsed = [board for i, board in enumerate(bingo_boards) if board != '']
-    chunks = [parsed[i:i + 5] for i in range(0, len(bingo_boards), 5) if bingo_boards != '']
+
+    chunks = [parsed[i:i + 5] for i in range(0, len(bingo_boards), 5)]
+
+    parsed_rows = []
+    for chunk in chunks:
+        new_board = []
+        for row in chunk:
+            new_board.append([int(r) for r in row.split(' ') if r != ''])
+        parsed_rows.append(new_board)
 
     initial_offset = 5
     # filter empty lines
@@ -67,9 +55,9 @@ with open('test_input.txt') as f:
     while True:
         bid += 1
 
-        if play(numbers[0:initial_offset + bid], chunks):
-            print('Winner!')
+        if result:= play(numbers[0:initial_offset + bid], parsed_rows):
+            print('Winner!: ', result)
             break
 
         if initial_offset + bid >= len(numbers):
-            raise print('Finish lottery!')
+            raise Exception('Finish lottery by force!')
