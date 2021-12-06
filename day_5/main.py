@@ -1,5 +1,6 @@
 with open('test_input_1.txt') as f:
     split_data = f.read().split('\n')
+    print(split_data)
 
 
 def parse_point(point: str):
@@ -24,3 +25,15 @@ def parse_line(line):
 
 
 assert {'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}} == parse_line('0,9 -> 5,9')
+
+
+def parse_points(data):
+    result = []
+    for line_data in data:
+        result.append(parse_line(line_data))
+
+    return result
+
+
+assert [{'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}},
+        {'start': {'x': 0, 'y': 9}, 'end': {'x': 2, 'y': 9}}] == parse_points(['0,9 -> 5,9', '0,9 -> 2,9'])
