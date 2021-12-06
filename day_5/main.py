@@ -1,6 +1,6 @@
 with open('test_input_1.txt') as f:
     split_data = f.read().split('\n')
-    #print(split_data)
+    # print(split_data)
 
 
 def parse_point(point: str):
@@ -27,7 +27,7 @@ def parse_line(line):
 assert {'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}} == parse_line('0,9 -> 5,9')
 
 
-def parse_points(data):
+def parse_points(data: list):
     return [parse_line(line_data) for line_data in data]
 
 
@@ -42,3 +42,10 @@ def filter_not_straight(coords):
 
 assert True is filter_not_straight({'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}})
 assert False is filter_not_straight({'start': {'x': 1, 'y': 9}, 'end': {'x': 5, 'y': 3}})
+
+
+def parse_data(data):
+    return [point for point in parse_points(data) if filter_not_straight(point)]
+
+
+assert [{'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}}] == parse_data(['0,9 -> 5,9', '8,0 -> 0,8'])
