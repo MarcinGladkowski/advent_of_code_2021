@@ -14,10 +14,13 @@ def parse_point(point: str):
 assert {'x': 0, 'y': 9} == parse_point('0,9')
 
 
-def parse_input(data):
-    pass
+def parse_line(line):
+    split = line.split('->')
 
-# def parse_line(line):
+    return {
+        'start': parse_point(split[0].strip()),
+        'end': parse_point(split[1].strip()),
+    }
 
 
-# assert { 'start': { 'x': 0, 'y': 9 }, 'end': {'x': 5, 'y': 9 }} == parse_line(['0'])
+assert {'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}} == parse_line('0,9 -> 5,9')
