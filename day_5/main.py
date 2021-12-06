@@ -28,11 +28,7 @@ assert {'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}} == parse_line('0,9 -
 
 
 def parse_points(data):
-    result = []
-    for line_data in data:
-        result.append(parse_line(line_data))
-
-    return result
+    return [parse_line(line_data) for line_data in data]
 
 
 assert [{'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}},
