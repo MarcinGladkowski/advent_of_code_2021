@@ -49,3 +49,25 @@ def parse_data(data):
 
 
 assert [{'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}}] == parse_data(['0,9 -> 5,9', '8,0 -> 0,8'])
+
+
+def draw_map(points):
+    """
+    Get highest x and y
+    Draw map from parsed point
+    """
+    x_start = [x.get('start').get('x') for x in points]
+    x_end = [x.get('end').get('x') for x in points]
+
+    y_start = [x.get('start').get('y') for x in points]
+    y_end = [x.get('end').get('y') for x in points]
+
+    print(x_start, x_end)
+
+    pass
+
+
+draw_map([
+    {'start': {'x': 0, 'y': 9}, 'end': {'x': 5, 'y': 9}},
+    {'start': {'x': 0, 'y': 9}, 'end': {'x': 2, 'y': 9}}
+])
